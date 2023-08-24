@@ -47,6 +47,22 @@ public class UsuarioController {
         }
     }
 
+    @PostMapping(path = "/login")
+    public ResponseEntity<Usuario> login(@RequestBody Usuario item) {
+        try {
+            
+            Usuario result = this._usuarioRepository.findByUsernameAndSenha(item.getUsername(), item.getSenha());
+            
+            if(result == null){
+                return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+            }
+
+            return new ResponseEntity<>(result, HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.EXPECTATION_FAILED);
+        }
+    } 
+
     @GetMapping("{id}")
     public ResponseEntity<Usuario> getById(@PathVariable("id") long id) {
 
