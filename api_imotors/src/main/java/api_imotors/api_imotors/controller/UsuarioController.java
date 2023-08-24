@@ -1,4 +1,4 @@
-package br.com.ibmec.cloud.demoapi.demoapi.controller;
+package api_imotors.api_imotors.controller;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,29 +16,31 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.ibmec.cloud.demoapi.demoapi.model.Pessoa;
-import br.com.ibmec.cloud.demoapi.demoapi.repository.PessoaRepository;
+
+import api_imotors.api_imotors.repository.UsuarioRepository;
+import api_imotors.api_imotors.model.Usuario;
+
 
 @RestController
-@RequestMapping("/pessoa")
-public class PessoaController {
+@RequestMapping("/usuario")
+public class UsuarioController {
 
     @Autowired
-    private PessoaRepository _pessoaRepository;
+    private UsuarioRepository _usuarioRepository;
 
     @GetMapping
-    public ResponseEntity<List<Pessoa>> getAll() {
+    public ResponseEntity<List<Usuario>> getAll() {
         try {
-            return new ResponseEntity<>(this._pessoaRepository.findAll(), HttpStatus.OK);
+            return new ResponseEntity<>(this._usuarioRepository.findAll(), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     @PostMapping
-    public ResponseEntity<Pessoa> create(@RequestBody Pessoa item) {
+    public ResponseEntity<Usuario> create(@RequestBody Usuario item) {
         try {
-            Pessoa result = this._pessoaRepository.save(item);
+            Usuario result = this._usuarioRepository.save(item);
             return new ResponseEntity<>(result, HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.EXPECTATION_FAILED);
@@ -46,9 +48,9 @@ public class PessoaController {
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<Pessoa> getById(@PathVariable("id") long id) {
+    public ResponseEntity<Usuario> getById(@PathVariable("id") long id) {
 
-        Optional<Pessoa> result = this._pessoaRepository.findById(id);
+        Optional<Usuario> result = this._usuarioRepository.findById(id);
 
         if (result.isPresent()) {
             return new ResponseEntity<>(result.get(), HttpStatus.OK);
@@ -58,20 +60,22 @@ public class PessoaController {
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<Pessoa> update(@PathVariable("id") long id, @RequestBody Pessoa pessoaNovosDados) {
+    public ResponseEntity<Usuario> update(@PathVariable("id") long id, @RequestBody Usuario pessoaNovosDados) {
 
-        Optional<Pessoa> result = this._pessoaRepository.findById(id);
+        Optional<Usuario> result = this._usuarioRepository.findById(id);
 
         // Não achei a pessoa a ser atualizada
         if (result.isPresent() == false) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
-        Pessoa pessoaASerAtualizada = result.get();
+        Usuario pessoaASerAtualizada = result.get();
         pessoaASerAtualizada.setNome(pessoaNovosDados.getNome());
-        pessoaASerAtualizada.setCpf(pessoaNovosDados.getCpf());
+        pessoaASerAtualizada.setFotoPerfil(pessoaNovosDados.getFotoPerfil());
+        pessoaASerAtualizada.setUsername(pessoaNovosDados.getUsername());
+        pessoaASerAtualizada.setSenha(pessoaNovosDados.getSenha());
 
-        this._pessoaRepository.save(pessoaASerAtualizada);
+        this._usuarioRepository.save(pessoaASerAtualizada);
 
         return new ResponseEntity<>(pessoaASerAtualizada, HttpStatus.OK);
     }
@@ -80,14 +84,14 @@ public class PessoaController {
     public ResponseEntity<HttpStatus> delete(@PathVariable("id") long id) {
         try {
 
-            Optional<Pessoa> pessoaASerExcluida = this._pessoaRepository.findById(id);
+            Optional<Usuario> pessoaASerExcluida = this._usuarioRepository.findById(id);
 
             // Não achei a pessoa a ser excluida
             if (pessoaASerExcluida.isPresent() == false) {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
 
-            this._pessoaRepository.delete(pessoaASerExcluida.get());
+            this._usuarioRepository.delete(pessoaASerExcluida.get());
 
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } catch (Exception e) {
