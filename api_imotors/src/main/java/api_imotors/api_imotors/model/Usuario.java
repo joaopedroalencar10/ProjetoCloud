@@ -1,11 +1,14 @@
 package api_imotors.api_imotors.model;
 
 
+import java.util.*;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -27,6 +30,9 @@ public class Usuario {
 
     @Column(nullable = true)
     private String senha;
+
+    @OneToMany(mappedBy = "usuario")
+    private List<Post> posts = new ArrayList<Post>();
     
     public String getUsername() {
         return username;
@@ -66,5 +72,9 @@ public class Usuario {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public void addPost(Post post) {
+        this.posts.add(post);
     }
 }
