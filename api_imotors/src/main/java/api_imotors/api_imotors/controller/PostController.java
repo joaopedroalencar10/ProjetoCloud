@@ -15,10 +15,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import api_imotors.api_imotors.repository.PostRepository;
-import api_imotors.api_imotors.repository.UsuarioRepository;
+import api_imotors.api_imotors.service.PostService;
 import api_imotors.api_imotors.model.Post;
-import api_imotors.api_imotors.model.Usuario;
 
 
 @RestController
@@ -26,15 +24,12 @@ import api_imotors.api_imotors.model.Usuario;
 public class PostController {
 
     @Autowired
-    private PostRepository _postRepository;
-
-    @Autowired
-    UsuarioRepository usuarioRepository;
+    PostService postService;
 
     @GetMapping
     public ResponseEntity<List<Post>> getAll() {
         try {
-            return new ResponseEntity<>(this._postRepository.findAll(), HttpStatus.OK);
+            return new ResponseEntity<>(postService.findAll(), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -42,7 +37,7 @@ public class PostController {
 
     @GetMapping("{id}")
     public ResponseEntity<Post> getById(@PathVariable("id") Long id) {
-        Optional<Post> existingItemOptional = _postRepository.findById(id);
+        Optional<Post> existingItemOptional = postService.findById(id);
 
         if (existingItemOptional.isPresent()) {
             return new ResponseEntity<>(existingItemOptional.get(), HttpStatus.OK);
@@ -51,21 +46,11 @@ public class PostController {
         }
     }
 
-
-    @PostMapping("{idUsuario}")
-    public ResponseEntity<Post> create(@PathVariable("idUsuario") long idUsuario, @RequestBody Post post) {
+    @PostMapping("{idPessoa}")
+    public ResponseEntity<Post> create(@PathVariable("idPessoa") long idPessoa, @RequestBody Post endereco) {
         try {
-
-            Optional<Usuario> usuario = usuarioRepository.findById(idUsuario);
-
-            if (usuario.isPresent() == false)
-                return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
-
-            usuario.get().addPost(post);
-            post.setUsuario(usuario.get());
-            this._postRepository.save(post);
-
-            return new ResponseEntity<>(post, HttpStatus.CREATED);
+            Post result = this.postService.create(idPessoa, endereco);
+            return new ResponseEntity<>(result, HttpStatus.CREATED);
             
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.EXPECTATION_FAILED);
@@ -73,28 +58,19 @@ public class PostController {
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<Post> update(@PathVariable("id") Long id, @RequestBody Post post) {
-
-        Optional<Post> existingItemOptional = _postRepository.findById(id);
-
-        if (existingItemOptional.isPresent() == false)
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-
-        Post existingItem = existingItemOptional.get();
-        
-        existingItem.setData(post.getData());
-        existingItem.setUrlFoto(post.getUrlFoto());        
-
-        _postRepository.save(existingItem);
-
-        return new ResponseEntity<>(existingItem, HttpStatus.OK);
-
+    public ResponseEntity<Post> update(@PathVariable("id") Long id, @RequestBody Post endereco) {
+        try {
+            Post result = this.postService.update(id, endereco);    
+            return new ResponseEntity<>(result, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.EXPECTATION_FAILED);
+        }
     }
 
     @DeleteMapping("{id}")
     public ResponseEntity<HttpStatus> delete(@PathVariable("id") Long id) {
         try {
-            _postRepository.deleteById(id);
+            this.postService.delete(id);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.EXPECTATION_FAILED);
