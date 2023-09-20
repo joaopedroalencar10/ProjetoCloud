@@ -22,6 +22,9 @@ public class Post {
     private long id;
 
     @Column(nullable = true)
+    private String texto;
+
+    @Column(nullable = true)
     private Date data;
 
     @Column(nullable = true)
@@ -37,6 +40,14 @@ public class Post {
 
     public void setId(long id) {
         this.id = id;
+    }
+     
+    public String getTexto() {
+        return texto;
+    }
+    
+    public void setTexto(String texto) {
+        this.texto = texto;
     }
 
     public Date getData() {
