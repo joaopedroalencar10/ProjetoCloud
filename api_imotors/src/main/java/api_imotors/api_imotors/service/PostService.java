@@ -35,7 +35,9 @@ public class PostService {
 
         Usuario usuario = opUsuario.get();
         usuario.addPost(newPost);
-        this.usuarioService.savePost(usuario);
+        
+        newPost.setUsuario(usuario);
+        this.postRepository.save(newPost);
 
         Post result = usuario.getPosts().get(usuario.getPosts().size() - 1);
         return result;
@@ -63,6 +65,10 @@ public class PostService {
             throw new Exception("Não encontrei o endereco a ser atualizado");
 
         this.postRepository.delete(endereco.get());
+    }
+
+    public void saveComentario(Post post) {
+        this.postRepository.save(post);
     }
 
 }

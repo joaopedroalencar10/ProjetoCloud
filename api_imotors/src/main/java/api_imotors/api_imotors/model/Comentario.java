@@ -1,7 +1,7 @@
 package api_imotors.api_imotors.model;
 
+
 import java.sql.Date;
-import java.util.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -14,13 +14,12 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 
 @Entity
-@Table(name = "posts")
-public class Post {
+@Table(name = "comentario")
+public class Comentario {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,24 +32,9 @@ public class Post {
     @Column(nullable = true)
     private Date data;
 
-    @Column(nullable = true)
-    private String urlFoto;
-
-    @OneToMany
-    @JoinColumn(name = "post_id")
-    private List<Comentario> comentarios = new ArrayList<Comentario>();
-
     @ManyToOne
     @JsonIgnore
-    private Usuario usuario;
-
-    public Usuario getUsuario() {
-        return usuario;
-    }
-
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
-    }
+    private Post post;
 
     public long getId() {
         return id;
@@ -76,25 +60,15 @@ public class Post {
         this.data = data;
     }
 
-    public String getUrlFoto() {
-        return urlFoto;
+    public Post getPost() {
+        return post;
     }
 
-    public void setUrlFoto(String urlFoto) {
-        this.urlFoto = urlFoto;
+    public void setPost(Post post) {
+        this.post = post;
     }
 
-    public void addComentario(Comentario comentario) {
-        this.comentarios.add(comentario);
-    }
-
-    public List<Comentario> getCometarios() {
-        return comentarios;
-    }
-
-    public void setCometarios(List<Comentario> cometarios) {
-        this.comentarios = cometarios;
-    }
+    
 
     
 }
