@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import api_imotors.api_imotors.service.UsuarioService;
 import jakarta.validation.Valid;
+import api_imotors.api_imotors.controller.Request.LoginRequest;
 import api_imotors.api_imotors.model.Usuario;
 
 
@@ -81,10 +82,10 @@ public class UsuarioController {
     }
 
     @PostMapping(path = "/login")
-    public ResponseEntity<Usuario> login(@RequestBody String username, @RequestBody String senha) {
+    public ResponseEntity<Usuario> login(@RequestBody LoginRequest login) {
         try {
             
-            Usuario result = this._usuarioService.login(username, senha);
+            Usuario result = this._usuarioService.login(login.getUsername(), login.getSenha());
             return new ResponseEntity<>(result, HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.EXPECTATION_FAILED);
