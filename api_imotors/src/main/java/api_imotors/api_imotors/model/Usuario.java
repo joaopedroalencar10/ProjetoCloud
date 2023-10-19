@@ -3,8 +3,10 @@ package api_imotors.api_imotors.model;
 
 import java.util.*;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -37,7 +39,7 @@ public class Usuario {
     @NotBlank(message = "O campo senha não pode ser vazio")
     private String senha;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     @JoinColumn(name = "usuario_id")
     private List<Post> posts = new ArrayList<Post>();
     

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import api_imotors.api_imotors.service.ComentarioService;
+import api_imotors.api_imotors.exception.CommentException;
 import api_imotors.api_imotors.model.Comentario;
 
 
@@ -47,33 +48,21 @@ public class ComentarioController {
     }
 
     @PostMapping("{idPost}")
-    public ResponseEntity<Comentario> create(@PathVariable("idPost") long idPost, @RequestBody Comentario comentario) {
-        try {
-            Comentario result = this.comentarioService.create(idPost, comentario);
-            return new ResponseEntity<>(result, HttpStatus.CREATED);
-            
-        } catch (Exception e) {
-            return new ResponseEntity<>(null, HttpStatus.EXPECTATION_FAILED);
-        }
+    public ResponseEntity<Comentario> create(@PathVariable("idPost") long idPost, @RequestBody Comentario comentario) throws CommentException {
+            Comentario savedItem = this.comentarioService.save(idPost, comentario);
+            return new ResponseEntity<>(savedItem, HttpStatus.CREATED);
     }
-
+   
     @PutMapping("{id}")
-    public ResponseEntity<Comentario> update(@PathVariable("id") Long id, @RequestBody Comentario endereco) {
-        try {
-            Comentario result = this.comentarioService.update(id, endereco);    
-            return new ResponseEntity<>(result, HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(null, HttpStatus.EXPECTATION_FAILED);
-        }
+    public ResponseEntity<Comentario> update(@PathVariable("id") Long id, @RequestBody Comentario endereco) throws CommentException {
+        return new ResponseEntity<>(comentarioService.update(id,endereco), HttpStatus.OK);
+
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity<HttpStatus> delete(@PathVariable("id") Long id) {
-        try {
-            this.comentarioService.delete(id);
+    public ResponseEntity<HttpStatus> delete(@PathVariable("id") Long id)  throws CommentException{
+            comentarioService.delete(id);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.EXPECTATION_FAILED);
-        }
-    }
+    
+}
 }

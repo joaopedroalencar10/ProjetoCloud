@@ -36,7 +36,7 @@ public class Post {
     @Column(nullable = true)
     private String urlFoto;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     @JoinColumn(name = "post_id")
     private List<Comentario> comentarios = new ArrayList<Comentario>();
 
@@ -95,6 +95,5 @@ public class Post {
     public void setCometarios(List<Comentario> cometarios) {
         this.comentarios = cometarios;
     }
-
     
 }
