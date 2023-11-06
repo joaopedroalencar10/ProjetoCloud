@@ -72,7 +72,7 @@ public class ComentarioService {
     
     public Comentario save(long idPost, Comentario item) throws CommentException {
         Optional<Post> opPost = this.postService.findById(idPost);
-
+ 
         if (opPost.isPresent() == false) {
             throw new CommentException("Post não encontrado");
         }
