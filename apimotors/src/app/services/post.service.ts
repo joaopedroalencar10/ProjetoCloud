@@ -11,7 +11,7 @@ export class PostService {
   constructor(private httpClient: HttpClient) { }
 
 public getPosts() : Observable<Post[]> {
-  return this.httpClient.get<Post[]>("https://apiimotors.azurewebsites.net/swagger-ui/index.html#/")
+  return this.httpClient.get<Post[]>("http://localhost:8080/post")
 }
 
 

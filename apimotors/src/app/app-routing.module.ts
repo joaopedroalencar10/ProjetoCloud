@@ -4,9 +4,9 @@ import { HomeComponent } from './pages/home/home.component';
 import { DetailComponent } from './pages/detail/detail.component';
 
 const routes: Routes = [
- {path:"",redirectTo:"home"},
-  {path:'home', component :HomeComponent},
-  {path:'detail', component :DetailComponent}
+  
+  {path:'home', component: HomeComponent},
+  {path:'detail', component : DetailComponent}
 ]
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
