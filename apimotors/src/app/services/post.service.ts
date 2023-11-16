@@ -11,11 +11,11 @@ export class PostService {
   constructor(private httpClient: HttpClient) { }
 
 public getPosts() : Observable<Post[]> {
-  return this.httpClient.get<Post[]>("http://localhost:8080/post")
+  return this.httpClient.get<Post[]>("https://apiimotors.azurewebsites.net/post")
 }
 
 
 public getPostsbyId(id : number) : Observable<Post> {
-  return this.httpClient.get<Post>("https://apiimotors.azurewebsites.net/swagger-ui/index.html#/" + id)
+  return this.httpClient.get<Post>("https://apiimotors.azurewebsites.net/post/" + id)
 }
 }

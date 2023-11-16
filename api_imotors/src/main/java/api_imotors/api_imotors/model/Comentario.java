@@ -1,7 +1,7 @@
 package api_imotors.api_imotors.model;
 
 
-import java.sql.Date;
+import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 

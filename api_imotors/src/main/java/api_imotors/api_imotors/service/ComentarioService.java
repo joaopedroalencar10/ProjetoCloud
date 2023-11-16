@@ -1,5 +1,6 @@
 package api_imotors.api_imotors.service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -75,6 +76,10 @@ public class ComentarioService {
  
         if (opPost.isPresent() == false) {
             throw new CommentException("Post não encontrado");
+        }
+
+        if (item.getData() == null) {
+            item.setData(new Date());
         }
 
         Post post = opPost.get();

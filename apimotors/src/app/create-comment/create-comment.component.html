@@ -1,0 +1,12 @@
+<h1 mat-dialog-title>Criar um novo comentário</h1>
+<div mat-dialog-content>
+  <mat-form-field>
+  <br />
+  <mat-form-field>
+    <mat-label>Digite seu comentário</mat-label>
+    <textarea matInput [formControl]="comentario" required></textarea>
+  </mat-form-field>
+<div mat-dialog-actions>
+  <button mat-button>Cancelar</button>
+  <button mat-button cdkFocusInitial (click)="criarNovoComentario();">Ok</button>
+</div>

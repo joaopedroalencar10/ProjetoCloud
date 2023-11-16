@@ -14,11 +14,11 @@ public class ApimotorsDocumentationConfiguration {
      public OpenAPI apiDocConfig() {
         return new OpenAPI()
                 .info(new Info()
-                        .title("Apresentação ap1")
-                        .description("Apresentação ap1 de projeto cloud")
+                        .title("Apresentação iMotors")
+                        .description("Apresentação ap2 de projeto cloud")
                         .version("1.0")
                         .contact(new Contact()
-                                .name("João Pedro,Caio,Lucca,Ana,Leonardo")
+                                .name("João Pedro,Lucca,Ana,Leonardo")
                                 .email("")));
     }
 }
