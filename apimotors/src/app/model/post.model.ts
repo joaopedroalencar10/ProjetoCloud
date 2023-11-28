@@ -3,5 +3,4 @@ export interface Post{
   data?:Date;
   texto?:String;
   urlFoto?:String;
-
 }

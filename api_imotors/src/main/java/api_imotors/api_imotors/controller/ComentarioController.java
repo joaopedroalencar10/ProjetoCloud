@@ -50,10 +50,10 @@ public class ComentarioController {
     }
 
     @PostMapping("{idPost}")
-    public ResponseEntity<Comentario> create(@PathVariable("idPost") long idPost, @RequestBody Comentario comentario) throws CommentException {
+     public ResponseEntity<Comentario> create(@PathVariable("idPost") long idPost, @RequestBody Comentario comentario) throws CommentException {
             Comentario savedItem = this.comentarioService.save(idPost, comentario);
             return new ResponseEntity<>(savedItem, HttpStatus.CREATED);
-    }
+    } 
    
     @PutMapping("{id}")
     public ResponseEntity<Comentario> update(@PathVariable("id") Long id, @RequestBody Comentario endereco) throws CommentException {

@@ -7,4 +7,5 @@ import api_imotors.api_imotors.model.Comentario;
 
 @Repository
 public interface ComentarioRepository extends JpaRepository<Comentario, Long> {
+
 }
